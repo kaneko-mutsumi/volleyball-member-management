@@ -5,8 +5,10 @@
 
 <mapper namespace="com.example.volleyball.mapper.MemberMapper">
 
-  <select id="findAll" resultType="com.example.volleyball.entity.Member">
-    SELECT * FROM members
+  <select
+    id="findAll"
+    resultType="com.example.volleyball.entity.Member">
+    SELECT * FROM members WHERE deleted = false
   </select>
 
 
@@ -14,5 +16,18 @@
     INSERT INTO members (name, uniform_number, join_date)
     VALUES (#{name}, #{uniformNumber}, #{joinDate})
   </insert>
+
+
+  <update id="update">
+    UPDATE members
+    SET name = #{name},
+    uniform_number = #{uniformNumber},
+    join_date = #{joinDate}
+    WHERE id = #{id}
+  </update>
+
+  <update id="delete">
+    UPDATE members SET deleted = true WHERE id = #{id}
+  </update>
 
 </mapper>

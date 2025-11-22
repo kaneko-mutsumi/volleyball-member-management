@@ -21,4 +21,12 @@ public class MemberService {
   public void registerMember(Member member) {
     memberMapper.insert(member);
   }
+
+  public void updateMember(Member member) {  // 追加
+    memberMapper.update(member);
+  }
+
+  public void deleteMember(Integer id) {  // 追加
+    memberMapper.delete(id);
+  }
 }
