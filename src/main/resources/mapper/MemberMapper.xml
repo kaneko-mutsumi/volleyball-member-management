@@ -1,164 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  1. XML 宣言
-
-  ?xml
-  =このファイルはXMLです
-  version="1.0"
-  = XMLのバージョン。
-  文字コードはUTF-8です
-  = 文字コードはUTF-8で書かれています、という意味。
-
-  → MyBatis固有というより「XMLファイルとしてのお約束
--->
-
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--
-2. DOCTYPE 宣言（MyBatis Mapper の定義）
-
-・このXMLは MyBatis の <mapper> 用です、という宣言
-・<mapper> タグの内側に <select> タグ（中にSQLを書く）や
- <insert>タグ（中にSQLを書く） を書いていく、というルールをこのDTDで定義している。
-
-→ IntelliJ がタグ名や属性名を補完してくれるのも、このおかげ。
--->
-
 
 <mapper namespace="com.example.volleyball.mapper.MemberMapper">
-  <!--
-  3. <mapper> タグと namespace
-
-    ・<mapper> ... </mapper>
-    = このXML全体が「ひとつのMapper」であることを表すタグ。
-
-  ・namespace="com.example.volleyball.mapper.MemberMapper"
-    = 対応する Java インターフェースの FQCN（フルネーム）
-    = MemberMapperインターフェース と このXMLを結びつける「名前空間」
-    右辺の "com.example.volleyball.mapper.MemberMapper" だけが「名前空間」という扱い
-    それが Java側のインターフェースの完全修飾名（FQCN）と一致している必要がある
-
-package com.example.volleyball.mapper;
-
-@Mapper
-public interface MemberMapper { ... }
-↑ このクラス名と完全一致しているから
-
-　MemberMapper.findAll() ←→ <select id="findAll">
-　MemberMapper.insert() ←→ <insert id="insert">
-
-という対応が取れるようになっています。
-
-
-  【対応関係】
-    Java: com.example.volleyball.mapper.MemberMapper
-    XML : <mapper namespace="com.example.volleyball.mapper.MemberMapper">
-
-  → この名前が一致していることで、
-    ・MemberMapper.findAll()
-    ・MemberMapper.insert(...)
-    に対して、
-    それぞれ <select id="findAll">, <insert id="insert"> が対応づけられる。
-
-    -->
-
-
 
   <select id="findAll" resultType="com.example.volleyball.entity.Member">
-    <!--
-     SELECT文（全件取得）定義
-     ・id="findAll"
-       - MemberMapper.findAll() に対応
-
-      SELECT 自体は 「検索する文」 全般のこと
-       例：SELECT * FROM members WHERE id = 1; も SELECT文
-      SELECT * FROM members;
-
-WHERE句がないので「members の 全件取得」
-
-
-
-     ・resultType
-       - 「1行分 の結果をどのJavaクラスに入れるか」を指定するもの
-
-       SELECT * FROM members
-       →rows（行）が何件か返ってくる
-　　　　MyBatisは
-　　　　1行ごとに Member のインスタンスを作る
-　　　　それを List<Member> にまとめて返す
-　　　　なので：
-　　　　resultType = 1レコードをマッピングする先のクラス
-
-
-
-       - com.example.volleyball.entity.Member（エンティティ）
-   -->
-
-
     SELECT * FROM members
-    <!-- membersテーブルの全件取得 -->
   </select>
 
 
   <insert id="insert">
-    <!--
-    INSERT文（新規登録）定義
-    ・id="insert"
-      - MemberMapper.insert(Member member) に対応
-
-      INSERT INTO ... (カラム列)
-　　　　「どのテーブルの、どのカラムに値を入れるか」を指定
-
-  -->
-
-
     INSERT INTO members (name, uniform_number, join_date)
-    <!--
-        INSERT対象カラム
-        ・name, uniform_number, join_date に値を入れる
-
-        VALUES (...)
-　　　　　「実際に入れる値」を並べる部分
-      -->
-
-
     VALUES (#{name}, #{uniformNumber}, #{joinDate})
-    <!--
-     VALUES の中身
-     ・#{name}
-       - 引数 Member の getName() の値が入る
-     ・#{uniformNumber}
-       - Member の getUniformNumber() の値が入る
-       - DBカラム uniform_number と Javaフィールド uniformNumber をマッピング
-     ・#{joinDate}
-       - Member の getJoinDate() の値が入る（LocalDate）
-   -->
   </insert>
 
 </mapper>
-
-
-<!--
-タグ（要素）
-　→　<select> や <insert> や <mapper> のこと
-
-XMLの世界では：
-
-<mapper> ... </mapper>  ← mapperタグ
-<select> ... </select>  ← selectタグ
-<insert> ... </insert>  ← insertタグ
-
-
-みたいに
-<名前> 〜 </名前> で囲まれたものを タグ（要素） と呼びます。
-
-HTMLの <div>, <p> などと同じイメージです。
-
-
-
-属性名
-　→　id や resultType や namespace の部分
-
-属性値
-　→　id="findAll" の "findAll" のところ
--->
