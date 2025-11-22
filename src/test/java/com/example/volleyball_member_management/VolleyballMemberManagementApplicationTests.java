@@ -1,0 +1,13 @@
+package com.example.volleyball_member_management;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class VolleyballMemberManagementApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
