@@ -1,4 +1,4 @@
-package com.example.volleyball_member_management;
+package com.example.volleyball;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

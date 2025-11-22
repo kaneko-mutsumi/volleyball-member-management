@@ -1,4 +1,4 @@
-package com.example.volleyball_member_management;
+package com.example.volleyball;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,5 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-
-		System.out.println("こんにちは");
 	}
 }
