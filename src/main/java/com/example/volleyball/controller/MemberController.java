@@ -22,6 +22,7 @@ import com.example.volleyball.service.MemberService;
  * ・@RestController, @GetMapping, @PostMapping, @RequestBody など
  *   Spring Web MVC のアノテーションを使うため
  */
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -81,7 +82,7 @@ public class MemberController {
   }
 
   @PostMapping
-  public String registerMember(@RequestBody Member member) {
+  public String registerMember(@Validated @RequestBody Member member) {
     memberService.registerMember(member);
     return "登録成功";
   }
