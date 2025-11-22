@@ -15,16 +15,56 @@ java {
 	}
 }
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// バリデーション（入力チェック）
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Swagger UI (springdoc-openapi)
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+	//Apache Commons Lang　便利機能
+	implementation "org.apache.commons:commons-lang3:3.14.0"
+
+	// Lombok（コード自動生成）
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// MySQL
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+
+	// MyBatis
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// MyBatisテスト用
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+
+	// Tomcat（WAR対応）
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	// テスト
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// H2データベース(一時的なテスト用DB)
+	testImplementation 'com.h2database:h2:2.2.224'
+
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
