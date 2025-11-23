@@ -36,4 +36,30 @@ class MemberControllerIntegrationTest {
             .content(objectMapper.writeValueAsString(member)))
         .andExpect(status().isOk());
   }
+
+  @Test
+  void 部員登録_名前空欄でエラー() throws Exception {
+    Member member = new Member();
+    member.setName("");
+    member.setUniformNumber(10);
+
+    mockMvc.perform(post("/members")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(member)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.name").value("名前は必須です"));
+  }
+
+  @Test
+  void 部員登録_背番号範囲外でエラー() throws Exception {
+    Member member = new Member();
+    member.setName("日向翔陽");
+    member.setUniformNumber(100);
+
+    mockMvc.perform(post("/members")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(member)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.uniformNumber").exists());
+  }
 }
